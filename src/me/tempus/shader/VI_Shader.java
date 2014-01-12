@@ -5,7 +5,6 @@ import static org.lwjgl.opengl.GL11.GL_FALSE;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
-import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
@@ -39,11 +38,11 @@ public class VI_Shader {
 		
 		if(numberOfTriangles <= 0){
 			try {
-				throw new Exception("Can't have 0 triangles");
-			} catch (Exception e) {
+				throw new RuntimeException("Can't have 0 triangles");
+			} catch (RuntimeException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				System.exit(1);
+				//System.exit(1);
 			}
 		}
 		
