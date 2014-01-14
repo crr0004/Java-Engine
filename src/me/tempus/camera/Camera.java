@@ -8,8 +8,8 @@ import org.lwjgl.util.vector.Vector3f;
 
 public class Camera {
 
-	private Vector3f pos = new Vector3f(-6, 34, 180);
-	private Vector3f rotate = new Vector3f(0,359,0);
+	private Vector3f pos = new Vector3f(0, 0, 0);
+	private Vector3f rotate = new Vector3f(0,0,0);
 	
 	private final float cameraRotationVelocity = 100;
 	

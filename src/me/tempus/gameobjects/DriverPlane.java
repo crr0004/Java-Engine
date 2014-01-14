@@ -1,8 +1,8 @@
-package me.tempus.skeleton;
+package me.tempus.gameobjects;
 
 import me.tempus.camera.Camera;
 import me.tempus.shader.PVM;
-import me.tempus.shader.VI_Shader;
+import me.tempus.shader.VIT_Shader;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -10,15 +10,17 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.util.vector.Vector3f;
 
-public class Driver {
-
-
-	private boolean done = false;
+public class DriverPlane {
+private boolean done = false;
 	
-	public VI_Shader shader;
+	private VIT_Shader shader;
 	
 	final Camera camera = new Camera();
+	
+	private Vector3f planePos = new Vector3f(0,0,0);
+	private Plane testPlane = new Plane(planePos, new Vector3f(1,1,1));
 	
 	private void createScreen(int width, int height){
 		try {
@@ -46,14 +48,16 @@ public class Driver {
 		}
 	}
 		
-	private void initOPG(){
+	private void initOPGL(){
 		Keyboard.enableRepeatEvents(true);
+		
+		testPlane.create("Wood_Box_Texture.jpg");
 	}
 	
 	public void loop(){
 		
 		createScreen(1024, 1024);
-		initOPG();
+		initOPGL();
 		setUpShaders();
 		
 		while(!done){
@@ -65,13 +69,14 @@ public class Driver {
 	}
 	
 	private void setUpShaders(){
-		//shader = new VI_Shader("TexturedShader.vert", "TexturedShader.frag");
+		shader = new VIT_Shader();
+		shader.load("shaders/VIT.vert", "shaders/VIT.frag");
 	}
 		
 	private void update(){
 			
 		camera.pollInput();
-			
+		testPlane.setPos(planePos);
 	}
 		
 	private void draw(){
@@ -81,7 +86,7 @@ public class Driver {
 		
 		PVM.loadIdentity();
 		camera.transform();
-		
+		testPlane.draw();
 		
 		GL20.glUseProgram(0);
 		Display.sync(60);
@@ -92,6 +97,6 @@ public class Driver {
 		
 		
 	public static void main(String[] args){
-			(new Driver()).loop();
+			(new DriverPlane()).loop();
 	}
 }
